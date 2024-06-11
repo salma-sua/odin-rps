@@ -1,29 +1,47 @@
+humanScore = 0;
+computerScore = 0;
+roundWinner = '';
+
+
 function getComputerChoice() {
     const choices = ['rock', 'paper', 'scissors'];
-    const computerSelection = Math.floor(Math.random() * 3);
-    return choices[computerSelection];
+    return choices[Math.floor(Math.random() * choices.length)];
 }
+console.log(getComputerChoice());
 
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection === computerSelection) {
-        return `It's a tie! You both chose ${playerSelection}`;
-    }
+function getHumanChoice() {
+    prompt('Enter your choice: rock, paper, or scissors').toLowerCase();
+}
+console.log(getHumanChoice());
 
-    if (
-       (playerSelection === 'rock' && computerSelection === 'scissors') ||
-       (playerSelection === 'paper' && computerSelection === 'rock') ||
-       (playerSelection === 'scissors' && computerSelection === 'paper')
-        ) {
-        return `You win! ${playerSelection} beats ${computerSelection}`;
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) {
+        return `It\'s a tie! You both chose ${humanChoice}.`;
     }
     if (
-        (playerSelection === 'scissors' && computerSelection === 'rock') ||
-        (playerSelection === 'paper' && computerSelection === 'scissors') ||
-        (playerSelection === 'rock' && computerSelection === 'paper')
-         ) {
-         return `You lose! ${computerSelection} beats ${playerSelection}`;
-     }
+        (humanChoice === 'rock' && computerChoice === 'scissors') ||
+        (humanChoice === 'paper' && computerChoice === 'rock') ||
+        (humanChoice === 'scissors' && computerChoice === 'paper') 
+    ) {
+        humanScore++;
+        return `You win this round! ${humanChoice} beats ${computerChoice}.`;
+    }
+    if (
+        (humanChoice === 'rock' && computerChoice === 'paper') ||
+        (humanChoice === 'paper' && computerChoice === 'scissors') ||
+        (humanChoice === 'scissors' && computerChoice === 'rock') 
+    ) {
+        computerScore++;
+        return `You lose this round! ${computerChoice} beats ${humanChoice}.`;
+    }
 }
+playRound(getHumanChoice(), getComputerChoice());
 
-const computerSelection = getComputerChoice();
-console.log(playRound('rock', computerSelection));
+function gameOver() {
+    if (humanScore === 5) {
+        return 'You win the game!';
+    }
+    if (computerScore === 5) {
+        return 'You lost!';
+    }
+}
